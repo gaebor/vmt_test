@@ -1,0 +1,18 @@
+cmake_minimum_required (VERSION 2.8)
+project (vmt_test)
+
+if(UNIX)
+    add_compile_options("-std=c++11" "-m64" "-Wall")
+elseif(WIN32)
+    add_compile_options("/W4")
+endif()
+
+include_directories(${CMAKE_SOURCE_DIR})
+
+add_library(fc SHARED f.c)
+add_library(fcxx SHARED f.cxx)
+
+add_executable(vmt_test_dynamic main.cxx)
+target_link_libraries(vmt_test_dynamic fc fcxx)
+
+add_executable(vmt_test_static main.cxx f.c f.cxx)
